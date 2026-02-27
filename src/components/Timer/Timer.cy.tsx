@@ -247,4 +247,22 @@ describe('<Timer />', () => {
     cy.wait(['@getSummariesFail']);
     cy.get('[class*=Timer_content] span[class*=Timer_error]');
   });
+
+  it('navigates back to today from a previous date', () => {
+    const previousDate = TODAYS_DATE - 24 * 60 * 60 * 1000;
+    cy.intercept('GET', `/summaries?date=${previousDate}`, {
+      fixture: 'summariesPast',
+    }).as('getSummariesPastForTodayNav');
+    cy.intercept('GET', `/summaries?date=${TODAYS_DATE}`, {
+      fixture: 'summaries',
+    }).as('getSummariesTodayFromNav');
+
+    cy.get("[data-test-id='left-nav-clicker']").click();
+    cy.wait(['@getSummariesPastForTodayNav']);
+    cy.get('h2').should('contain', '3-22-2023');
+
+    cy.get("[data-test-id='today-nav-clicker']").click();
+    cy.wait(['@getSummariesTodayFromNav']);
+    cy.get('h2').should('contain', '3-23-2023');
+  });
 });

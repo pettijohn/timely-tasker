@@ -171,4 +171,17 @@ describe('<Timer /> using localStorage', () => {
     cy.get('[data-test-id=use-cloud-storage]').click();
     cy.wait('@getAuthInfo');
   });
+
+  it('navigates back to today from a previous date', () => {
+    cy.get("[data-test-id='left-nav-clicker']").click();
+    cy.get('h2').should('contain', '3-22-2023');
+    cy.get("[data-test-id='summary-text-0']").should('have.value', '');
+
+    cy.get("[data-test-id='today-nav-clicker']").click();
+    cy.get('h2').should('contain', '3-23-2023');
+    cy.get("[data-test-id='summary-text-0']").should(
+      'have.value',
+      'replace jest with cypress'
+    );
+  });
 });

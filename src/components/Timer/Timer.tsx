@@ -35,6 +35,7 @@ export interface TimerProps {
   currentTime: Date;
   leftNavClicker: ReactElement;
   rightNavClicker: ReactElement;
+  todayNavClicker: ReactElement;
 }
 
 const LOCAL_STORAGE = 'TimelyTasker:UseLocalStorage';
@@ -48,6 +49,7 @@ const Timer = ({
   currentTime,
   leftNavClicker,
   rightNavClicker,
+  todayNavClicker,
 }: TimerProps) => {
   const [greeting, setGreeting] = useState('');
   const summariesRestSelectors = getRestSelectorsFor(
@@ -168,6 +170,7 @@ const Timer = ({
           {leftNavClicker}
           <a href={`?date=${date}`}>Work Date: {dateDisplay(date)}</a>
           {rightNavClicker}
+          {todayNavClicker}
         </h2>
         <p data-test-id="greeting">{greeting || ''}</p>
         <p>
