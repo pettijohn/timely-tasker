@@ -3,6 +3,7 @@ import { IdentityResponse } from '../../../lib/Identity';
 import styles from './Timer.module.scss';
 import TaskRowTicks from './TaskRowTicks';
 import TaskRowSummary from './TaskRowSummary';
+import TaskRowFocused from './TaskRowFocused';
 import RestApi, { getRestSelectorsFor } from '../../RestApi';
 import LocalStorageApi from '../../LocalStorageApi';
 import { useDispatch, useSelector } from 'react-redux';
@@ -131,6 +132,7 @@ const Timer = ({
 
   const summaryElements = new Array<JSX.Element>();
   const tickRowElements = new Array<JSX.Element>();
+  const focusedRowElements = new Array<JSX.Element>();
 
   for (let slot = 0; slot < 12; slot++) {
     if (summariesSuccess) {
@@ -140,6 +142,7 @@ const Timer = ({
       tickRowElements.push(
         <TaskRowTicks {...{ date, slot, key: slot, useApi }} />
       );
+      focusedRowElements.push(<TaskRowFocused {...{ slot, key: slot }} />);
     }
   }
 
@@ -217,6 +220,12 @@ const Timer = ({
               <div className={styles.right_column}>
                 <Header />
                 {tickRowElements}
+              </div>
+              <div className={styles.focused_column}>
+                <div className={styles.focused_header} data-test-id="focused-header">
+                  Focused
+                </div>
+                {focusedRowElements}
               </div>
             </>
           )}

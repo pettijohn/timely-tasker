@@ -60,6 +60,12 @@ describe('<Timer />', () => {
       .should('have.value', 'replace jest with cypress');
   });
 
+  it('renders focused hours per row', () => {
+    cy.get("[data-test-id='focused-header']").should('contain', 'Focused');
+    cy.get("[data-test-id='focused-hours-0']").should('contain', '0.25 hrs');
+    cy.get("[data-test-id='focused-hours-1']").should('contain', '0 hrs');
+  });
+
   it('renders ticks content', () => {
     cy.get("[data-test-id='0-36']")
       .first()

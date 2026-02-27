@@ -132,6 +132,12 @@ describe('<Timer /> using localStorage', () => {
       .should('have.value', 'replace jest with cypress');
   });
 
+  it('renders focused hours per row', () => {
+    cy.get("[data-test-id='focused-header']").should('contain', 'Focused');
+    cy.get("[data-test-id='focused-hours-0']").should('contain', '0.25 hrs');
+    cy.get("[data-test-id='focused-hours-1']").should('contain', '0 hrs');
+  });
+
   it('updates summary text typed in the <input>', () => {
     cy.get("[data-test-id='summary-text-0']").type(',ok');
     cy.wait(900); // There is 800ms debounce so we have to do this, ew
@@ -161,6 +167,12 @@ describe('<Timer /> using localStorage', () => {
         ).to.equal(1)
       )
     );
+  });
+
+  it('updates focused hours when a focused tick is changed', () => {
+    cy.get("[data-test-id='focused-hours-0']").should('contain', '0.25 hrs');
+    cy.get("[data-test-id='0-31']").click();
+    cy.get("[data-test-id='focused-hours-0']").should('contain', '0 hrs');
   });
 
   it('switches cloud storage when clicked', () => {

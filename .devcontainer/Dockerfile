@@ -9,12 +9,11 @@ RUN apt-get install -y postgresql-common \
     && apt-get install -y postgresql-client-18
 
 
-# Install Node 18 (matches CI environment)
+# Install Node 
 ENV FNM_PATH="/root/.local/share/fnm"
+ENV PATH="$PATH:$FNM_PATH"
 RUN curl -o- https://fnm.vercel.app/install | bash \
-    && fnm install 18 \
-    && fnm default 18
-ENV PATH="$PATH:$FNM_PATH:/root/.local/share/fnm/aliases/default/bin"
+    && fnm install 24
 
 # And Typescript globally
 RUN eval "$(fnm env --shell bash)" && npm install -g typescript
